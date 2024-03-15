@@ -1,0 +1,19 @@
+<mat-card class="dsu-card">
+    <form class="dsu-form" [formGroup]="formGrp" (ngSubmit)="onSubmit()">
+        <mat-form-field class="dsu-form-width">
+            <mat-label>Squad</mat-label>
+            <input required matInput placeholder="Enter squad name" formControlName="squad">
+        </mat-form-field>
+        <mat-form-field class="dsu-form-width">
+            <mat-label>Squad Members</mat-label>
+            <input required matInput placeholder="Enter name (use comma to separate)" formControlName="members">
+        </mat-form-field>
+        <mat-form-field class="dsu-form-width">
+            <mat-label>Time Interval (sec)</mat-label>
+            <input required matInput type="number" placeholder="Per person time(seconds)" formControlName="timeInterval">
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary">Start DSU</button>
+    </form>
+
+</mat-card>

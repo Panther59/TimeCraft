@@ -16,8 +16,8 @@ body {margin: 0; font-family: Roboto, Helvetica, sans-serif;}
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$TimeCraft-primary: mat.define-palette(mat.$indigo-palette);
-$TimeCraft-accent: mat.define-palette(mat.$orange-palette, A200, A100, A400);
+$TimeCraft-primary: mat.define-palette(mat.$orange-palette);
+$TimeCraft-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $TimeCraft-warn: mat.define-palette(mat.$red-palette);
