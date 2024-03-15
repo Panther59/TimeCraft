@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DsuComponent } from './dsu/dsu.component';
 import { DefaultComponent } from './default/default.component';
+import { DsuComponent } from './dsu/dsu.component';
 
 export const routes: Routes = [
     { path: 'dsu', component: DsuComponent },
