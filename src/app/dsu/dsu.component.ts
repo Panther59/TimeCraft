@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DailyDSU, MemberData } from '../_models/dailyDSU';
 import { LocalService } from '../_services/local.service';
+import '../global';
 
 @Component({
   selector: 'app-dsu',
@@ -87,13 +88,6 @@ export class DsuComponent implements OnInit {
     this.startTimer();
   }
 
-  nextMemberClicked() {
-    this.pauseTimer();
-    if (this.currentMember) {
-      this.currentMember.status = 'Done';
-    }
-    this.goForNextMember();
-  }
 
   goForNextMember() {
     if (this.nextMember !== undefined && this.currentMemberIndex !== undefined) {
@@ -105,56 +99,114 @@ export class DsuComponent implements OnInit {
     }
   }
 
-  comebackLater() {
-    this.pauseTimer();
+  nextMemberClicked() {
+    try {
 
-    if (this.currentMemberIndex !== undefined) {
+      this.pauseTimer();
       if (this.currentMember) {
-        this.currentMember.timeTakenInSec = undefined;
-        this.currentMember.status = 'Pending';
+        this.currentMember.status = 'Done';
       }
-
-      let moveMember = this.dsuData?.members[this.currentMemberIndex];
-      this.dsuData?.members.splice(this.currentMemberIndex, 1);
-      if (moveMember) {
-        this.dsuData?.members.push(moveMember);
-      }
-      this.currentMemberIndex = this.currentMemberIndex - 1;
-    }
-
-    if (this.nextMember !== undefined && this.currentMemberIndex !== undefined) {
       this.goForNextMember();
-    } else {
-      this.completeMeeting();
-    }
 
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+  comebackLater() {
+    try {
+
+      this.pauseTimer();
+
+      if (this.currentMemberIndex !== undefined) {
+        if (this.currentMember) {
+          this.currentMember.timeTakenInSec = undefined;
+          this.currentMember.status = 'Pending';
+        }
+
+        let moveMember = this.dsuData?.members[this.currentMemberIndex];
+        this.dsuData?.members.splice(this.currentMemberIndex, 1);
+        if (moveMember) {
+          this.dsuData?.members.push(moveMember);
+        }
+        this.currentMemberIndex = this.currentMemberIndex - 1;
+      }
+
+      if (this.nextMember !== undefined && this.currentMemberIndex !== undefined) {
+        this.goForNextMember();
+      } else {
+        this.completeMeeting();
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
   }
   skipMember() {
-    this.pauseTimer();
-    if (this.currentMember) {
-      this.currentMember.status = 'Skipped';
-      this.currentMember.timeTakenInSec = undefined;
-      if (this.currentMemberIndex) {
-        this.skippedList.push(this.currentMemberIndex);
-      }
-    }
+    try {
 
-    if (this.nextMember !== undefined && this.currentMemberIndex !== undefined) {
-      this.goForNextMember();
-    } else {
-      this.completeMeeting();
+      this.pauseTimer();
+      if (this.currentMember) {
+        this.currentMember.status = 'Skipped';
+        this.currentMember.timeTakenInSec = undefined;
+        if (this.currentMemberIndex) {
+          this.skippedList.push(this.currentMemberIndex);
+        }
+      }
+
+      if (this.nextMember !== undefined && this.currentMemberIndex !== undefined) {
+        this.goForNextMember();
+      } else {
+        this.completeMeeting();
+      }
+
+    } catch (error) {
+      console.error(error);
     }
   }
-  completeMeeting() {
-    this.pauseTimer();
-    if (this.currentMember) {
-      this.currentMember.status = 'Done';
-    }
 
-    this.meetingOver = true;
-    this.currentMemberIndex = undefined;
-    this.currentMember = undefined;
-    this.nextMember = undefined;
-    this.localService.saveData(`DSUData-${this.dsuData?.date.toLocaleDateString()}`, JSON.stringify(this.dsuData));
+  startMember(member: MemberData) {
+    try {
+
+      this.pauseTimer();
+      if (this.currentMemberIndex !== undefined) {
+        if (this.currentMember) {
+          this.currentMember.timeTakenInSec = undefined;
+          this.currentMember.status = 'Pending';
+        }
+        const selectedMemberIndex = this.dsuData?.members.findIndex(x => x.name == member.name);
+
+        if (selectedMemberIndex) {
+          this.dsuData?.members.splice(selectedMemberIndex, 1);
+          this.dsuData?.members.insertAt(this.currentMemberIndex, member);
+        }
+
+        this.currentMemberIndex = this.currentMemberIndex - 1;
+        this.goForNextMember();
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  completeMeeting() {
+    try {
+
+      this.pauseTimer();
+      if (this.currentMember) {
+        this.currentMember.status = 'Done';
+      }
+
+      this.meetingOver = true;
+      this.currentMemberIndex = undefined;
+      this.currentMember = undefined;
+      this.nextMember = undefined;
+      this.localService.saveData(`DSUData-${this.dsuData?.date.toLocaleDateString()}`, JSON.stringify(this.dsuData));
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

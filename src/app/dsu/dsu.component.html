@@ -49,7 +49,7 @@
             <div class="statusAction"></div>
         </div>
         <div *ngFor="let u of dsuData.members">
-            <mat-card class="nameCard" [class.active]="u.name === currentMember?.name">
+            <mat-card class="nameCard" [class.active]="meetingStarted && u.name === currentMember?.name">
                 <div class="namestatus">
                     <mat-icon *ngIf="u.status === 'Done'" style="color: green">check</mat-icon>
                     <mat-icon *ngIf="u.status === 'Pending'">sync</mat-icon>
@@ -61,7 +61,7 @@
                     currentMember.name)) ? u.timeTakenInSec + ' sec': ''}}</div>
 
                 <div class="statusAction">
-                    <button mat-mini-fab *ngIf="meetingStarted && u.status !== 'Done' && u.name !== currentMember?.name" (click)="startTimer()" color="">
+                    <button mat-mini-fab *ngIf="meetingStarted && u.status !== 'Done' && u.name !== currentMember?.name" (click)="startMember(u)" color="">
                         <mat-icon>play_arrow</mat-icon>
                     </button>
                 </div>
