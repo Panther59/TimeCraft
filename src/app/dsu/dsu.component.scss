@@ -1,4 +1,4 @@
-.dsu-card{
+.dsu-card {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -16,6 +16,7 @@
 .memberName {
     margin-top: 10px;
 }
+
 .actionButton {
     min-width: 100px;
     margin-right: 10px;
@@ -43,8 +44,40 @@
     color: white;
 }
 
-.summary{
+.summary {
     margin-top: 30px;
     color: gray;
     margin-bottom: 10px;
+}
+
+.nameCard {
+    display: -webkit-box;
+    margin: auto;
+    width: 430px;
+
+    .name {
+        width: 150px;
+        margin: 10px;
+        text-align: left;
+    }
+
+    .timeTaken {
+        text-align: right;
+        width: 100px;
+        margin: 10px;
+    }
+
+    .namestatus {
+        width: 50px;
+        margin: 10px;
+    }
+
+    .statusAction {
+        width: 50px;
+        margin: 5px;
+    }
+
+    .active {
+        background-color: green !important;
+    }
 }

@@ -24,29 +24,48 @@
     <button *ngIf="timerStarted && !isPaused" class="actionButton pauseResumeButton" type="submit" mat-raised-button
         color="primary" (click)="pauseTimer()">Pause</button>
 
-    <button *ngIf="!meetingOver && isPaused" class="actionButton pauseResumeButton" type="submit" mat-raised-button color="primary"
-        (click)="resumeTimer()">Resume</button>
+    <button *ngIf="!meetingOver && isPaused" class="actionButton pauseResumeButton" type="submit" mat-raised-button
+        color="primary" (click)="resumeTimer()">Resume</button>
 
 
     <button *ngIf="(timerStarted || isPaused) && nextMember !== undefined" type="submit" mat-raised-button
         class="actionButton" color="primary" (click)="comebackLater()">Comeback later</button>
 
-    <button *ngIf="!meetingOver && (timerStarted === true || isPaused)" type='submit' mat-raised-button class="actionButton"
-        color='primary' (click)="skipMember()">Skip</button>
+    <button *ngIf="!meetingOver && (timerStarted === true || isPaused)" type='submit' mat-raised-button
+        class="actionButton" color='primary' (click)="skipMember()">Skip</button>
 
     <button class="actionButton" *ngIf="(timerStarted || isPaused) && nextMember !== undefined" type="submit"
-        mat-raised-button color="accent" (click)="goForNextMember()">Next turn: {{nextMember.name}}</button>
+        mat-raised-button color="accent" (click)="nextMemberClicked()">Next turn: {{nextMember.name}}</button>
 
     <button class="actionButton" *ngIf="nextMember === undefined && !meetingOver" type="submit" mat-raised-button
         color="primary" (click)="completeMeeting()">Complete</button>
 
 
     <div class="summary" *ngIf="dsuData && dsuData.members">
+        <div class="nameCard" color="primary">
+            <div class="namestatus"></div>
+            <div class="name">Name</div>
+            <div class="timeTaken"> Time Taken</div>
+            <div class="statusAction"></div>
+        </div>
         <div *ngFor="let u of dsuData.members">
-            <span>{{u.name}}</span>
-            <span
-                *ngIf="u.timeTakenInSec && (currentMember === undefined || (currentMember && u.name !== currentMember.name))">
-                Time Taken: {{u.timeTakenInSec}} sec</span>
+            <mat-card class="nameCard" [class.active]="u.name === currentMember?.name">
+                <div class="namestatus">
+                    <mat-icon *ngIf="u.status === 'Done'" style="color: green">check</mat-icon>
+                    <mat-icon *ngIf="u.status === 'Pending'">sync</mat-icon>
+                    <mat-icon *ngIf="u.status === 'Skipped'" style="color: orange">sync_disabled</mat-icon>
+                </div>
+                <div class="name">{{u.name}}</div>
+                <div class="timeTaken">
+                    {{u.timeTakenInSec !== undefined && (currentMember === undefined || (currentMember && u.name !==
+                    currentMember.name)) ? u.timeTakenInSec + ' sec': ''}}</div>
+
+                <div class="statusAction">
+                    <button mat-mini-fab *ngIf="meetingStarted && u.status !== 'Done' && u.name !== currentMember?.name" (click)="startTimer()" color="">
+                        <mat-icon>play_arrow</mat-icon>
+                    </button>
+                </div>
+            </mat-card>
         </div>
     </div>
 

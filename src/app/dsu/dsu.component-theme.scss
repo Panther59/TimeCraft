@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+@mixin dsu-component($theme) {
+
+    $primary-default: mat.get-theme-color($theme, accent, default);
+    $primary-default-text: mat.get-theme-color($theme, accent, default-contrast);
+
+    .active {
+        background-color: $primary-default !important;
+        color: $primary-default-text !important;
+    }
+}

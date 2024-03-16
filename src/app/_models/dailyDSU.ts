@@ -8,4 +8,5 @@ export interface DailyDSU {
 export interface MemberData {
     name: string;
     timeTakenInSec?: number;
+    status?: string;
 }

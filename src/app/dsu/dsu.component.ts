@@ -55,6 +55,7 @@ export class DsuComponent implements OnInit {
   setUserData() {
     if (this.currentMemberIndex !== undefined && this.dsuData?.members !== undefined) {
       this.currentMember = this.dsuData?.members[this.currentMemberIndex];
+      this.currentMember.status = undefined;
       if (this.currentMemberIndex < this.dsuData?.members.length - 1) {
         this.nextMember = this.dsuData?.members[this.currentMemberIndex + 1];
       } else {
@@ -86,8 +87,15 @@ export class DsuComponent implements OnInit {
     this.startTimer();
   }
 
-  goForNextMember() {
+  nextMemberClicked() {
     this.pauseTimer();
+    if (this.currentMember) {
+      this.currentMember.status = 'Done';
+    }
+    this.goForNextMember();
+  }
+
+  goForNextMember() {
     if (this.nextMember !== undefined && this.currentMemberIndex !== undefined) {
       this.currentMemberIndex = this.currentMemberIndex + 1;
       this.setUserData();
@@ -103,6 +111,7 @@ export class DsuComponent implements OnInit {
     if (this.currentMemberIndex !== undefined) {
       if (this.currentMember) {
         this.currentMember.timeTakenInSec = undefined;
+        this.currentMember.status = 'Pending';
       }
 
       let moveMember = this.dsuData?.members[this.currentMemberIndex];
@@ -123,6 +132,7 @@ export class DsuComponent implements OnInit {
   skipMember() {
     this.pauseTimer();
     if (this.currentMember) {
+      this.currentMember.status = 'Skipped';
       this.currentMember.timeTakenInSec = undefined;
       if (this.currentMemberIndex) {
         this.skippedList.push(this.currentMemberIndex);
@@ -137,6 +147,10 @@ export class DsuComponent implements OnInit {
   }
   completeMeeting() {
     this.pauseTimer();
+    if (this.currentMember) {
+      this.currentMember.status = 'Done';
+    }
+
     this.meetingOver = true;
     this.currentMemberIndex = undefined;
     this.currentMember = undefined;
