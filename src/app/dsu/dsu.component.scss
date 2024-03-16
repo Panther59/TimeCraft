@@ -18,13 +18,12 @@
 }
 
 .actionButton {
-    min-width: 100px;
+    min-width: 150px;
     margin-right: 10px;
     margin-top: 10px;
 }
 
 .status {
-    font-size: xx-large;
     padding: 20px;
     margin-bottom: 10px;
 }
@@ -35,13 +34,32 @@
 }
 
 .amber {
-    background-color: orange;
-    color: black;
+    background-color: darkorange;
+    color: white;
+}
+
+.running {
+    animation: blinker 1s linear infinite;
+}
+
+.paused {
+    background-color: gray;
+    color: white;
+}
+
+@keyframes blinker {
+    50% {
+        background-color: transparent;
+    }
 }
 
 .red {
     background-color: red;
     color: white;
+}
+
+.hidden {
+    color: transparent;
 }
 
 .summary {
