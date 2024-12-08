@@ -178,17 +178,15 @@ export class DsuComponent implements OnInit {
       this.pauseTimer();
       if (this.currentMemberIndex !== undefined) {
         if (this.currentMember) {
-          this.currentMember.timeTakenInSec = undefined;
-          this.currentMember.status = 'Pending';
+          this.currentMember.status = 'Done';
         }
         const selectedMemberIndex = this.dsuData?.members.findIndex(x => x.name == member.name);
 
         if (selectedMemberIndex) {
           this.dsuData?.members.splice(selectedMemberIndex, 1);
-          this.dsuData?.members.insertAt(this.currentMemberIndex, member);
+          this.dsuData?.members.insertAt(this.currentMemberIndex+1, member);
         }
 
-        this.currentMemberIndex = this.currentMemberIndex - 1;
         this.goForNextMember();
       }
 
